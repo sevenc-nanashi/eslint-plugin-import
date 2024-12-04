@@ -38,19 +38,34 @@ const isStaticRequireWith1Param = (node) => !node.optional
 function checkAndReport(src, ctx) {
   const { value } = src;
 
-  if (!builtinModules.includes(value)) { return; }
+  if (ctx.options[0] === 'never') {
+    if (!value.startsWith('node:')) { return; }
+    if (builtinModules.includes(value.slice(5))) { return; }
 
-  if (value.startsWith('node:')) { return; }
+    ctx.report({
+      node: src,
+      messageId: MESSAGE_ID,
+      data: { moduleName: value },
+      /** @param {import('eslint').Rule.RuleFixer} fixer */
+      fix(fixer) {
+        return replaceStringLiteral(fixer, src, '', 0, 5);
+      },
+    });
 
-  ctx.report({
-    node: src,
-    messageId: MESSAGE_ID,
-    data: { moduleName: value },
-    /** @param {import('eslint').Rule.RuleFixer} fixer */
-    fix(fixer) {
-      return replaceStringLiteral(fixer, src, 'node:', 0, 0);
-    },
-  });
+  } else {
+    if (!builtinModules.includes(value)) { return; }
+    if (value.startsWith('node:')) { return; }
+
+    ctx.report({
+      node: src,
+      messageId: MESSAGE_ID,
+      data: { moduleName: value },
+      /** @param {import('eslint').Rule.RuleFixer} fixer */
+      fix(fixer) {
+        return replaceStringLiteral(fixer, src, 'node:', 0, 0);
+      },
+    });
+  }
 }
 
 /** @type {import('eslint').Rule.RuleModule} */
@@ -65,7 +80,11 @@ module.exports = {
       url: docsUrl('prefer-node-builin-imports'),
     },
     fixable: 'code',
-    schema: [],
+    schema: [
+      {
+        enum: ["always", "never"],
+      },
+    ],
     messages,
   },
   create(ctx) {
