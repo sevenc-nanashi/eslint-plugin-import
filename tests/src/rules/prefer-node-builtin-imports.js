@@ -223,7 +223,7 @@ ruleTester.run('prefer-node-builtin-imports', rule, {
     // Prefer using the protocol
     ...invalidTests.map((testCase) => test(testCase)),
 
-    // Prefer not using the protocol
+    // Prefer not using the protocol: flip the output and code
     ...invalidTests.map((testCase) =>
       test({
         ...testCase,
