@@ -42,12 +42,13 @@ function checkAndReport(src, ctx) {
 
   if (ctx.options[0] === 'never') {
     if (!value.startsWith('node:')) { return; }
-    if (builtinModules.includes(value.slice(5))) { return; }
+    const actualModuleName = value.slice(5);
+    if (!builtinModules.includes(actualModuleName)) { return; }
 
     ctx.report({
       node: src,
       messageId: NEVER_PREFER_MESSAGE_ID,
-      data: { moduleName: value },
+      data: { moduleName: actualModuleName },
       /** @param {import('eslint').Rule.RuleFixer} fixer */
       fix(fixer) {
         return replaceStringLiteral(fixer, src, '', 0, 5);
