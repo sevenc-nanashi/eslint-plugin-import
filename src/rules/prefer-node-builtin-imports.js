@@ -80,7 +80,7 @@ module.exports = {
       description:
         'Prefer using the `node:` protocol when importing Node.js builtin modules.',
       recommended: true,
-      category: 'Best Practices',
+      category: 'Static analysis',
       url: docsUrl('prefer-node-builin-imports'),
     },
     fixable: 'code',
