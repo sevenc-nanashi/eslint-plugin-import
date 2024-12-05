@@ -3,9 +3,11 @@
 const { builtinModules } = require('module');
 const { default: docsUrl } = require('../docsUrl');
 
-const MESSAGE_ID = 'prefer-node-builtin-imports';
+const DO_PREFER_MESSAGE_ID = 'preferNodeBuiltinImports';
+const NEVER_PREFER_MESSAGE_ID = 'neverPreferNodeBuiltinImports';
 const messages = {
-  [MESSAGE_ID]: 'Prefer `node:{{moduleName}}` over `{{moduleName}}`.',
+  [DO_PREFER_MESSAGE_ID]: 'Prefer `node:{{moduleName}}` over `{{moduleName}}`.',
+  [NEVER_PREFER_MESSAGE_ID]: 'Prefer `{{moduleName}}` over `node:{{moduleName}}`.',
 };
 
 function replaceStringLiteral(
@@ -44,7 +46,7 @@ function checkAndReport(src, ctx) {
 
     ctx.report({
       node: src,
-      messageId: MESSAGE_ID,
+      messageId: NEVER_PREFER_MESSAGE_ID,
       data: { moduleName: value },
       /** @param {import('eslint').Rule.RuleFixer} fixer */
       fix(fixer) {
@@ -58,7 +60,7 @@ function checkAndReport(src, ctx) {
 
     ctx.report({
       node: src,
-      messageId: MESSAGE_ID,
+      messageId: DO_PREFER_MESSAGE_ID,
       data: { moduleName: value },
       /** @param {import('eslint').Rule.RuleFixer} fixer */
       fix(fixer) {
