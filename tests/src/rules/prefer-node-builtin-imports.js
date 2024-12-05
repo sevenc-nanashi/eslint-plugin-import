@@ -25,13 +25,13 @@ const invalidTests = [
   },
   {
     code: `
-  async function foo() {
-    const fs = await import('fs');
-  }`,
+    async function foo() {
+      const fs = await import('fs');
+    }`,
     output: `
-  async function foo() {
-    const fs = await import('node:fs');
-  }`,
+    async function foo() {
+      const fs = await import('node:fs');
+    }`,
     parserOptions: useNewerParser,
     errors: [
       { messageId: 'preferNodeBuiltinImports', data: { moduleName: 'fs' } },
@@ -91,12 +91,12 @@ const invalidTests = [
   {
     code: `
     async function foo() {
-    const fs = await import("fs/promises");
-  }`,
+      const fs = await import("fs/promises");
+    }`,
     output: `
     async function foo() {
-    const fs = await import("node:fs/promises");
-  }`,
+      const fs = await import("node:fs/promises");
+    }`,
     parserOptions: useNewerParser,
     errors: [
       {
