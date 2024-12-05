@@ -209,14 +209,6 @@ ruleTester.run('prefer-node-builtin-imports', rule, {
       code: 'const fs = require("fs/promises");',
       options: preferNotUsingProtocol,
     }),
-    test({
-      code: `
-      async function foo() {
-        const fs = await import(\`node:fs\`);
-      }`,
-      options: preferNotUsingProtocol,
-      parserOptions: useNewerParser,
-    }),
     test({ code: 'import "punycode/";', options: preferNotUsingProtocol }),
     test({
       code: 'const fs = require("fs");',

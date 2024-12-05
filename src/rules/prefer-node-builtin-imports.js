@@ -34,15 +34,16 @@ const isStaticRequireWith1Param = (node) => !node.optional
   && node.callee.type === 'Identifier'
   && node.callee.name === 'require'
   && node.arguments[0]
+  && isStringLiteral(node.arguments[0])
   // check for only 1 argument
   && !node.arguments[1];
 
 function checkAndReport(src, ctx) {
-  const { value } = src;
+  let { value: moduleName } = src;
 
   if (ctx.options[0] === 'never') {
-    if (!value.startsWith('node:')) { return; }
-    const actualModuleName = value.slice(5);
+    if (!moduleName.startsWith('node:')) { return; }
+    const actualModuleName = moduleName.slice(5);
     if (!builtinModules.includes(actualModuleName)) { return; }
 
     ctx.report({
@@ -56,13 +57,13 @@ function checkAndReport(src, ctx) {
     });
 
   } else {
-    if (!builtinModules.includes(value)) { return; }
-    if (value.startsWith('node:')) { return; }
+    if (!builtinModules.includes(moduleName)) { return; }
+    if (moduleName.startsWith('node:')) { return; }
 
     ctx.report({
       node: src,
       messageId: DO_PREFER_MESSAGE_ID,
-      data: { moduleName: value },
+      data: { moduleName: moduleName },
       /** @param {import('eslint').Rule.RuleFixer} fixer */
       fix(fixer) {
         return replaceStringLiteral(fixer, src, 'node:', 0, 0);
