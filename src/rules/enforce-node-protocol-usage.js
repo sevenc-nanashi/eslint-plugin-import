@@ -39,7 +39,7 @@ const isStaticRequireWith1Param = (node) => !node.optional
   && !node.arguments[1];
 
 function checkAndReport(src, ctx) {
-  let { value: moduleName } = src;
+  const { value: moduleName } = src;
 
   if (ctx.options[0] === 'never') {
     if (!moduleName.startsWith('node:')) { return; }
@@ -63,7 +63,7 @@ function checkAndReport(src, ctx) {
     ctx.report({
       node: src,
       messageId: DO_PREFER_MESSAGE_ID,
-      data: { moduleName: moduleName },
+      data: { moduleName },
       /** @param {import('eslint').Rule.RuleFixer} fixer */
       fix(fixer) {
         return replaceStringLiteral(fixer, src, 'node:', 0, 0);
@@ -86,7 +86,7 @@ module.exports = {
     fixable: 'code',
     schema: [
       {
-        enum: ["always", "never"],
+        enum: ['always', 'never'],
       },
     ],
     messages,
