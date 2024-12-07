@@ -1,4 +1,4 @@
-# import/prefer-node-builtin-imports
+# import/enforce-node-protocol-usage
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

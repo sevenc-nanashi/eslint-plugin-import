@@ -54,6 +54,7 @@ This plugin intends to support linting of ES2015+ (ES6+) import/export syntax, a
 | Name                                                                     | Description                                                                          | 💼   | ⚠️ | 🚫 | 🔧 | 💡 | ❌  |
 | :----------------------------------------------------------------------- | :----------------------------------------------------------------------------------- | :--- | :- | :- | :- | :- | :- |
 | [default](docs/rules/default.md)                                         | Ensure a default export is present, given a default import.                          | ❗ ☑️ |    |    |    |    |    |
+| [enforce-node-protocol-usage](docs/rules/enforce-node-protocol-usage.md) | Prefer using the `node:` protocol when importing Node.js builtin modules.            |      |    |    | 🔧 |    |    |
 | [named](docs/rules/named.md)                                             | Ensure named imports correspond to a named export in the remote file.                | ❗ ☑️ |    | ⌨️ |    |    |    |
 | [namespace](docs/rules/namespace.md)                                     | Ensure imported namespaces contain dereferenced properties as they are dereferenced. | ❗ ☑️ |    |    |    |    |    |
 | [no-absolute-path](docs/rules/no-absolute-path.md)                       | Forbid import of modules using absolute paths.                                       |      |    |    | 🔧 |    |    |
@@ -67,7 +68,6 @@ This plugin intends to support linting of ES2015+ (ES6+) import/export syntax, a
 | [no-unresolved](docs/rules/no-unresolved.md)                             | Ensure imports point to a file/module that can be resolved.                          | ❗ ☑️ |    |    |    |    |    |
 | [no-useless-path-segments](docs/rules/no-useless-path-segments.md)       | Forbid unnecessary path segments in import and require statements.                   |      |    |    | 🔧 |    |    |
 | [no-webpack-loader-syntax](docs/rules/no-webpack-loader-syntax.md)       | Forbid webpack loader syntax in imports.                                             |      |    |    |    |    |    |
-| [prefer-node-builtin-imports](docs/rules/prefer-node-builtin-imports.md) | Prefer using the `node:` protocol when importing Node.js builtin modules.            |      |    |    | 🔧 |    |    |
 
 ### Style guide
 

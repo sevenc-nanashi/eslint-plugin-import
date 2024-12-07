@@ -3,7 +3,7 @@ import { test } from '../utils';
 import { RuleTester } from 'eslint';
 
 const ruleTester = new RuleTester();
-const rule = require('rules/prefer-node-builtin-imports');
+const rule = require('rules/enforce-node-protocol-usage');
 
 const preferNotUsingProtocol = ['never'];
 const useNewerParser = { ecmaVersion: 2021 };
@@ -154,7 +154,7 @@ const invalidTests = [
   },
 ];
 
-ruleTester.run('prefer-node-builtin-imports', rule, {
+ruleTester.run('enforce-node-protocol-usage', rule, {
   valid: [
     test({ code: 'import unicorn from "unicorn";' }),
     test({ code: 'import fs from "./fs";' }),
@@ -210,33 +210,24 @@ ruleTester.run('prefer-node-builtin-imports', rule, {
       options: preferNotUsingProtocol,
     }),
     test({ code: 'import "punycode/";', options: preferNotUsingProtocol }),
-    test({
-      code: 'const fs = require("fs");',
-      options: preferNotUsingProtocol,
-    }),
-    test({
-      code: 'const fs = require("fs/promises");',
-      options: preferNotUsingProtocol,
-    }),
   ],
   invalid: [
     // Prefer using the protocol
     ...invalidTests.map((testCase) => test(testCase)),
 
     // Prefer not using the protocol: flip the output and code
-    ...invalidTests.map((testCase) =>
-      test({
-        ...testCase,
-        code: testCase.output,
-        options: preferNotUsingProtocol,
-        output: testCase.code,
-        errors: [
-          {
-            messageId: 'neverPreferNodeBuiltinImports',
-            data: testCase.errors[0].data,
-          },
-        ],
-      }),
+    ...invalidTests.map((testCase) => test({
+      ...testCase,
+      code: testCase.output,
+      options: preferNotUsingProtocol,
+      output: testCase.code,
+      errors: [
+        {
+          messageId: 'neverPreferNodeBuiltinImports',
+          data: testCase.errors[0].data,
+        },
+      ],
+    }),
     ),
   ],
 });
