@@ -69,6 +69,8 @@ function checkAndReport(src, ctx) {
         return replaceStringLiteral(fixer, src, 'node:', 0, 0);
       },
     });
+  } else if (ctx.options[0] === undefined) {
+    throw new Error('Missing option');
   } else {
     throw new Error(`Unexpected option: ${ctx.options[0]}`);
   }
