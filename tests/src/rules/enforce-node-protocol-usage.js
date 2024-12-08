@@ -271,19 +271,18 @@ ruleTester.run('enforce-node-protocol-usage', rule, {
     ...invalidTests.map((testCase) => test(testCase)),
 
     // Prefer not using the protocol: flip the output and code
-    ...invalidTests.map((testCase) =>
-      test({
-        ...testCase,
-        code: testCase.output,
-        options: preferNotUsingProtocol,
-        output: testCase.code,
-        errors: [
-          {
-            messageId: 'neverPreferNodeBuiltinImports',
-            data: testCase.errors[0].data,
-          },
-        ],
-      }),
+    ...invalidTests.map((testCase) => test({
+      ...testCase,
+      code: testCase.output,
+      options: preferNotUsingProtocol,
+      output: testCase.code,
+      errors: [
+        {
+          messageId: 'neverPreferNodeBuiltinImports',
+          data: testCase.errors[0].data,
+        },
+      ],
+    }),
     ),
   ],
 });
