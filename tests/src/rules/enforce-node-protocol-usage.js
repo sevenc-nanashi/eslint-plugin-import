@@ -259,6 +259,12 @@ ruleTester.run('enforce-node-protocol-usage', rule, {
       options: preferNotUsingProtocol,
     }),
     test({ code: 'import "punycode/";', options: preferNotUsingProtocol }),
+
+    // should not report if the module requires `node:` protocol
+    test({
+      code: 'const fs = require("node:test");',
+      options: preferNotUsingProtocol,
+    }),
   ],
   invalid: [
     // Prefer using the protocol
