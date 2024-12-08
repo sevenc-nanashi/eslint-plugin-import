@@ -16,12 +16,10 @@ This rule enforces that builtins node imports are using `node:` protocol. It res
 
 ## Options
 
-The rule accepts a single string option which may be one of:
+The rule requires a single string option which may be one of:
 
- - `'always'` - enforces that builtins node imports are using `node:` protocol.
- - `'never'` - enforces that builtins node imports are not using `node:` protocol.
-
-By default the rule will use the `'always'` option.
+- `'always'` - enforces that builtins node imports are using `node:` protocol.
+- `'never'` - enforces that builtins node imports are not using `node:` protocol.
 
 ## Examples
 

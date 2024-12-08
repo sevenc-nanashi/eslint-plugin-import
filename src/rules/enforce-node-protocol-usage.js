@@ -56,7 +56,7 @@ function checkAndReport(src, ctx) {
       },
     });
 
-  } else {
+  } else if (ctx.options[0] === 'always') {
     if (!builtinModules.includes(moduleName)) { return; }
     if (moduleName.startsWith('node:')) { return; }
 
@@ -69,6 +69,8 @@ function checkAndReport(src, ctx) {
         return replaceStringLiteral(fixer, src, 'node:', 0, 0);
       },
     });
+  } else {
+    throw new Error(`Unexpected option: ${ctx.options[0]}`);
   }
 }
 
