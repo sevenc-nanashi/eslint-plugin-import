@@ -262,6 +262,18 @@ ruleTester.run('enforce-node-protocol-usage', rule, {
 
     // should not report if the module requires `node:` protocol
     test({
+      code: 'import sqlite from "node:sqlite"',
+      options: preferUsingProtocol,
+    }),
+    test({
+      code: 'const fs = require("node:test");',
+      options: preferUsingProtocol,
+    }),
+    test({
+      code: 'import sqlite from "node:sqlite"',
+      options: preferNotUsingProtocol,
+    }),
+    test({
       code: 'const fs = require("node:test");',
       options: preferNotUsingProtocol,
     }),
