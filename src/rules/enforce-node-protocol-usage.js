@@ -69,9 +69,8 @@ function checkAndReport(src, ctx) {
         return replaceStringLiteral(fixer, src, 'node:', 0, 0);
       },
     });
-  } else if (ctx.options[0] === undefined) {
-    throw new Error('Missing option');
   } else {
+    // should be unreachable, as eslint validates the options
     throw new Error(`Unexpected option: ${ctx.options[0]}`);
   }
 }
@@ -88,11 +87,16 @@ module.exports = {
       url: docsUrl('enforce-node-protocol-usage'),
     },
     fixable: 'code',
-    schema: [
-      {
-        enum: ['always', 'never'],
-      },
-    ],
+    schema: {
+      type: 'array',
+      minItems: 1,
+      maxItems: 1,
+      items: [
+        {
+          enum: ['always', 'never'],
+        },
+      ],
+    },
     messages,
   },
   create(ctx) {
